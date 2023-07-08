@@ -30,7 +30,7 @@ describe("tickets sale page", () => {
   });
 
   numberOfMovieViewers.forEach((numberOf) => {
-    it.only("should booking a movie in an available hall", () => {
+    it.only(`should booking a movie in an available hall - ${numberOf.name}`, () => {
       const happyPath = scenarios.find((path) => path.name === "happy path");
       cy.visit("http://qamid.tmweb.ru/admin");
       cy.get(".page-header__subtitle").should("be.visible");
@@ -53,6 +53,21 @@ describe("tickets sale page", () => {
           cy.get(".page-nav__day:nth-of-type(3)").click();
           cy.contains(new RegExp(movieTitle, "i")).should("be.visible");
           cy.get(".movie").first().contains("11:00").click();
+          numberOf.data.forEach((seat) => {
+            cy.get(
+              `.buying-scheme__wrapper > :nth-child(${seat.row}) > :nth-child(${seat.seat})`
+            ).click();
+          });
+          cy.get(".acceptin-button").click();
+          cy.contains("Вы выбрали билеты:").should("be.visible");
+          cy.get(".ticket__details.ticket__chairs")
+            .invoke("text")
+            .then((text) => {
+              numberOf.data.forEach((seat) => {
+                const seatText = `${seat.row}/${seat.seat}`;
+                cy.wrap(text).should("contain", seatText);
+              });
+            });
         });
     });
   });

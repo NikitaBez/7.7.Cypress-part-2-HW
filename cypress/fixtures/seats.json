@@ -3,20 +3,20 @@
         "name": "4 cinema viewers",
         "data": [
             {
-                "row": 2,
-                "seat": 3
-            },
-            {
-                "row": 2,
-                "seat": 4
+                "row": 3,
+                "seat": 5
             },
             {
                 "row": 3,
-                "seat": 3
+                "seat": 6
             },
             {
                 "row": 3,
-                "seat": 4
+                "seat": 7
+            },
+            {
+                "row": 3,
+                "seat": 8
             }
         ]
     },
@@ -24,12 +24,12 @@
         "name": "2 cinema viewers",
         "data": [
             {
-                "row": 3,
-                "seat": 3
+                "row": 4,
+                "seat": 6
             },
             {
-                "row": 3,
-                "seat": 4
+                "row": 4,
+                "seat": 7
             }
         ]
     }
