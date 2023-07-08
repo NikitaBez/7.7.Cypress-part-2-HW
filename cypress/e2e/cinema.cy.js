@@ -1,5 +1,5 @@
-import scenarios from "..//fixtures/admin login.json";
-import numberOfMovieViewers from "..//fixtures/seats.json";
+import adminLogin from "..//fixtures/admin login.json";
+import seats from "..//fixtures/seats.json";
 
 describe("tickets sale page", () => {
   beforeEach(() => {
@@ -9,7 +9,7 @@ describe("tickets sale page", () => {
     cy.get(".page-nav__day").should("have.length", 7);
   });
 
-  scenarios.forEach((path) => {
+  adminLogin.forEach((path) => {
     it(`should be logged into the admin - ${path.name}`, () => {
       cy.visit("http://qamid.tmweb.ru/admin");
       cy.get(".page-header__subtitle").should("be.visible");
@@ -29,9 +29,11 @@ describe("tickets sale page", () => {
     });
   });
 
-  numberOfMovieViewers.forEach((numberOf) => {
-    it.only(`should booking a movie in an available hall - ${numberOf.name}`, () => {
-      const happyPath = scenarios.find((path) => path.name === "happy path");
+  seats.forEach((numberOf) => {
+    it(`should booking a movie in an available hall - ${numberOf.name}`, () => {
+      const happyPath = adminLogin.find(
+        (path) => path.name === adminLogin[0].name
+      );
       cy.visit("http://qamid.tmweb.ru/admin");
       cy.get(".page-header__subtitle").should("be.visible");
       cy.contains("Администраторррская").should("be.visible"); //Администраторррская - опечатка
