@@ -1,0 +1,12 @@
+[
+    {
+        "name": "happy path",
+        "email": "qamid@qamid.ru",
+        "password": "qamid"
+    },
+    {
+        "name": "sad path",
+        "email": "qamid@qamid.ru",
+        "password": "qwerty"
+    }
+]
