@@ -1,4 +1,5 @@
 import scenarios from "..//fixtures/admin login.json";
+import numberOfMovieViewers from "..//fixtures/seats.json";
 
 describe("tickets sale page", () => {
   beforeEach(() => {
@@ -28,15 +29,31 @@ describe("tickets sale page", () => {
     });
   });
 
-  it.only("should booking a movie in an available hall", () => {
-    const happyPath = scenarios.find((path) => path.name === "happy path");
-    cy.visit("http://qamid.tmweb.ru/admin");
-    cy.get(".page-header__subtitle").should("be.visible");
-    cy.contains("Администраторррская").should("be.visible"); //Администраторррская - опечатка
+  numberOfMovieViewers.forEach((numberOf) => {
+    it.only("should booking a movie in an available hall", () => {
+      const happyPath = scenarios.find((path) => path.name === "happy path");
+      cy.visit("http://qamid.tmweb.ru/admin");
+      cy.get(".page-header__subtitle").should("be.visible");
+      cy.contains("Администраторррская").should("be.visible"); //Администраторррская - опечатка
 
-    cy.get('[for="email"] > .login__input').type(happyPath.email);
-    cy.get('[for="pwd"] > .login__input').type(happyPath.password);
-    cy.get(".login__button").click();
-    cy.contains("Управление залами").should("be.visible");
+      cy.get('[for="email"] > .login__input').type(happyPath.email);
+      cy.get('[for="pwd"] > .login__input').type(happyPath.password);
+      cy.get(".login__button").click();
+      cy.contains("Управление залами").should("be.visible");
+
+      let movieTitle;
+
+      cy.get(".conf-step__movie-title")
+        .eq(0)
+        .invoke("text")
+        .then((text) => {
+          movieTitle = text;
+          cy.visit("/");
+          cy.get(".page-nav__day").should("have.length", 7);
+          cy.get(".page-nav__day:nth-of-type(3)").click();
+          cy.contains(new RegExp(movieTitle, "i")).should("be.visible");
+          cy.get(".movie").first().contains("11:00").click();
+        });
+    });
   });
 });
