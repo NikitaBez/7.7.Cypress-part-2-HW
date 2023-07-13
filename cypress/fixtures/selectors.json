@@ -1,0 +1,10 @@
+{
+    "day": ".page-nav__day",
+    "header": ".page-header__subtitle",
+    "login_btn": ".login__button",
+    "movie_title": ".conf-step__movie-title",
+    "third_day": ".page-nav__day:nth-of-type(3)",
+    "movie_selection": ".movie",
+    "accept_btn": ".acceptin-button",
+    "chairs_info": ".ticket__details.ticket__chairs"
+}

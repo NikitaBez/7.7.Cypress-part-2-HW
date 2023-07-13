@@ -1,23 +1,24 @@
-import adminLogin from "..//fixtures/admin login.json";
+import adminLogin from "..//fixtures/adminLogin.json";
 import seats from "..//fixtures/seats.json";
+import selector from "..//fixtures/selectors.json";
 
 describe("tickets sale page", () => {
   beforeEach(() => {
     cy.visit("/");
   });
   it("main page, shows 7 days", () => {
-    cy.get(".page-nav__day").should("have.length", 7);
+    cy.get(selector.day).should("have.length", 7);
   });
 
   adminLogin.forEach((path) => {
     it(`should be logged into the admin - ${path.name}`, () => {
       cy.visit("http://qamid.tmweb.ru/admin");
-      cy.get(".page-header__subtitle").should("be.visible");
+      cy.get(selector.header).should("be.visible");
       cy.contains("Администраторррская").should("be.visible"); //Администраторррская - опечатка
 
       cy.get('[for="email"] > .login__input').type(path.email);
       cy.get('[for="pwd"] > .login__input').type(path.password);
-      cy.get(".login__button").click();
+      cy.get(selector.login_btn).click();
 
       cy.get("body").then(($body) => {
         if ($body.find("Управление залами").length > 0) {
@@ -35,34 +36,34 @@ describe("tickets sale page", () => {
         (path) => path.name === adminLogin[0].name
       );
       cy.visit("http://qamid.tmweb.ru/admin");
-      cy.get(".page-header__subtitle").should("be.visible");
+      cy.get(selector.header).should("be.visible");
       cy.contains("Администраторррская").should("be.visible"); //Администраторррская - опечатка
 
       cy.get('[for="email"] > .login__input').type(happyPath.email);
       cy.get('[for="pwd"] > .login__input').type(happyPath.password);
-      cy.get(".login__button").click();
+      cy.get(selector.login_btn).click();
       cy.contains("Управление залами").should("be.visible");
 
       let movieTitle;
 
-      cy.get(".conf-step__movie-title")
+      cy.get(selector.movie_title)
         .eq(0)
         .invoke("text")
         .then((text) => {
           movieTitle = text;
           cy.visit("/");
-          cy.get(".page-nav__day").should("have.length", 7);
-          cy.get(".page-nav__day:nth-of-type(3)").click();
+          cy.get(selector.day).should("have.length", 7);
+          cy.get(selector.third_day).click();
           cy.contains(new RegExp(movieTitle, "i")).should("be.visible");
-          cy.get(".movie").first().contains("11:00").click();
+          cy.get(selector.movie_selection).first().contains("11:00").click();
           numberOf.data.forEach((seat) => {
             cy.get(
               `.buying-scheme__wrapper > :nth-child(${seat.row}) > :nth-child(${seat.seat})`
             ).click();
           });
-          cy.get(".acceptin-button").click();
+          cy.get(selector.accept_btn).click();
           cy.contains("Вы выбрали билеты:").should("be.visible");
-          cy.get(".ticket__details.ticket__chairs")
+          cy.get(selector.chairs_info)
             .invoke("text")
             .then((text) => {
               numberOf.data.forEach((seat) => {
