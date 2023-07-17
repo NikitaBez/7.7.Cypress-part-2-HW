@@ -16,8 +16,8 @@ describe("tickets sale page", () => {
       cy.get(selector.header).should("be.visible");
       cy.contains("Администраторррская").should("be.visible"); //Администраторррская - опечатка
 
-      cy.get('[for="email"] > .login__input').type(path.email);
-      cy.get('[for="pwd"] > .login__input').type(path.password);
+      cy.get(selector.email).type(path.email);
+      cy.get(selector.password).type(path.password);
       cy.get(selector.login_btn).click();
 
       cy.get("body").then(($body) => {
@@ -39,8 +39,8 @@ describe("tickets sale page", () => {
       cy.get(selector.header).should("be.visible");
       cy.contains("Администраторррская").should("be.visible"); //Администраторррская - опечатка
 
-      cy.get('[for="email"] > .login__input').type(happyPath.email);
-      cy.get('[for="pwd"] > .login__input').type(happyPath.password);
+      cy.get(selector.email).type(happyPath.email);
+      cy.get(selector.password).type(happyPath.password);
       cy.get(selector.login_btn).click();
       cy.contains("Управление залами").should("be.visible");
 

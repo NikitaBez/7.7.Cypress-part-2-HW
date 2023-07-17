@@ -6,5 +6,7 @@
     "third_day": ".page-nav__day:nth-of-type(3)",
     "movie_selection": ".movie",
     "accept_btn": ".acceptin-button",
-    "chairs_info": ".ticket__details.ticket__chairs"
+    "chairs_info": ".ticket__details.ticket__chairs",
+    "email": "[for=\"email\"] > .login__input",
+    "password": "[for=\"pwd\"] > .login__input"
 }
